@@ -13,7 +13,7 @@
 #  index_contact_books_on_user_id  (user_id)
 #
 class ContactBook < ApplicationRecord
-  validates :name, length: { minimum: 4, maximum: 20 }, uniqueness: { scope: :user }
+  validates :name, length: { minimum: 4, maximum: 20 }, uniqueness: { scope: :user_id }
 
   has_many :contacts, dependent: :destroy
 

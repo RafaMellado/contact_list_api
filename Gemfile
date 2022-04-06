@@ -43,10 +43,12 @@ group :development, :test do
   gem 'annotate'
   gem 'faker'
   gem 'pry'
-  gem 'rspec-rails', '~> 5.1.1'
+  gem 'factory_bot_rails'
 end
 
-group :development do
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
+group :test do
+  gem 'rspec-rails', '~> 5.1.1'
+  gem 'database_cleaner'
+  gem 'rails_authorize_matchers', github: 'pacop/rails_authorize_matchers'
+  gem 'shoulda-matchers'
 end

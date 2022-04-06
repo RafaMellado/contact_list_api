@@ -15,14 +15,10 @@
 #
 #  index_contacts_on_contact_book_id  (contact_book_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (contact_book_id => contact_books.id)
-#
 class Contact < ApplicationRecord
   validates :givenname, length: { minimum: 2, maximum: 24 }
   validates :surname, length: { minimum: 2, maximum: 24 }
-  validates :email, presence: true, uniqueness: { scope: :contact_book }, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :email, presence: true, uniqueness: { scope: :contact_book_id }, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :phone, presence: true, numericality: true, length: { minimum: 9, maximum: 15 }
 
   has_many :contact_histories, dependent: :destroy
