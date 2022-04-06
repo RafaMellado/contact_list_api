@@ -1,6 +1,16 @@
 class ApplicationController < ActionController::API
+  include RailsAuthorize
+
+  rescue_from RailsAuthorize::NotAuthorizedError, with: :unauthorized
+
+  attr_reader :current_user
+
   def not_found
-    render json: { error: 'not_found' }
+    head 404
+  end
+
+  def unauthorized
+    head 403
   end
 
   def authorize_request

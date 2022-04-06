@@ -29,7 +29,11 @@ class Contact < ApplicationRecord
 
   belongs_to :contact_book
 
-  after_save :create_history, if: :saved_changes?
+  after_update :create_history, if: :saved_changes?
+
+  def owner_user_id
+    contact_book.user_id
+  end
 
   private
 

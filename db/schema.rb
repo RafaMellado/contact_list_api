@@ -52,6 +52,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_05_235334) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "contact_histories", "contacts"
   add_foreign_key "contacts", "contact_books"
 end

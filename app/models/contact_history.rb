@@ -15,10 +15,6 @@
 #
 #  index_contact_histories_on_contact_id  (contact_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (contact_id => contacts.id)
-#
 class ContactHistory < ApplicationRecord
   belongs_to :contact
 end

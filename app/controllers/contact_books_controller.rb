@@ -4,9 +4,7 @@ class ContactBooksController < ApplicationController
 
   # GET /contact_books
   def index
-    @contact_books = ContactBook.all
-
-    render json: @contact_books
+    render json: authorized_scope(ContactBook)
   end
 
   # GET /contact_books/1
@@ -17,6 +15,8 @@ class ContactBooksController < ApplicationController
   # POST /contact_books
   def create
     @contact_book = ContactBook.new(create_params)
+
+    authorize @contact_book
 
     if @contact_book.save
       render json: @contact_book, status: :created, location: @contact_book
@@ -43,6 +43,8 @@ class ContactBooksController < ApplicationController
 
   def set_contact_book
     @contact_book = ContactBook.find(params[:id])
+
+    authorize @contact_book
   end
 
   def contact_book_params
