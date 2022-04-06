@@ -8,24 +8,24 @@ class ContactBookPolicy < ApplicationPolicy
   end
 
   def create?
-    user_is_owner_of_contact_book?
+    user_owner_of_contact_book?
   end
 
   def show?
-    user_is_owner_of_contact_book?
+    user_owner_of_contact_book?
   end
 
   def update?
-    user_is_owner_of_contact_book?
+    user_owner_of_contact_book?
   end
 
   def destroy?
-    user_is_owner_of_contact_book?
+    user_owner_of_contact_book?
   end
 
   private
 
-  def user_is_owner_of_contact_book?
+  def user_owner_of_contact_book?
     @record.user_id == @user.id
   end
 end
