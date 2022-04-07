@@ -1,14 +1,27 @@
-# Class for JWT Auth
 class JsonWebToken
-  SECRET_KEY = Rails.application.secrets.secret_key_base.to_s
+  class << self
+    def encode(payload, exp = 24.hours.from_now)
+      assign_payload_expiration_time(payload, exp)
 
-  def self.encode(payload, exp = 24.hours.from_now)
-    payload[:exp] = exp.to_i
-    JWT.encode(payload, SECRET_KEY)
-  end
+      JWT.encode(payload, secret_key)
+    end
 
-  def self.decode(token)
-    decoded = JWT.decode(token, SECRET_KEY)[0]
-    HashWithIndifferentAccess.new decoded
+    def decode(token)
+      HashWithIndifferentAccess.new(decode_json_web_token(token))
+    end
+
+    private
+
+    def secret_key
+      Rails.application.secrets.secret_key_base.to_s
+    end
+
+    def assign_payload_expiration_time(payload, exp)
+      payload[:exp] = exp.to_i
+    end
+
+    def decode_json_web_token(token)
+      JWT.decode(token, secret_key)[0]
+    end
   end
 end

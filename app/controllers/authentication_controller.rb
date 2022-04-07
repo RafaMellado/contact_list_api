@@ -3,12 +3,10 @@ class AuthenticationController < ApplicationController
 
   # POST /auth/login
   def login
-    @user = User.find_by_email(params[:email])
+    @user = find_user
 
     if @user&.authenticate(params[:password])
-      token = JsonWebToken.encode(user_id: @user.id)
-      time = Time.now + 24.hours.to_i
-      render json: { token: token, exp: time.strftime('%m-%d-%Y %H:%M'),
+      render json: { token: encode_json_web_token, exp: expiration_time,
                      username: @user.username }, status: :ok
     else
       render json: { error: 'unauthorized' }, status: :unauthorized
@@ -16,6 +14,18 @@ class AuthenticationController < ApplicationController
   end
 
   private
+
+  def find_user
+    User.find_by_email(params[:email])
+  end
+
+  def encode_json_web_token
+    JsonWebToken.encode(user_id: @user.id)
+  end
+
+  def expiration_time
+    (Time.now + 24.hours.to_i).strftime('%m-%d-%Y %H:%M')
+  end
 
   def login_params
     params.permit(:email, :password)
