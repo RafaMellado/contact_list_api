@@ -48,10 +48,10 @@ class ContactBooksController < ApplicationController
   end
 
   def contact_book_params
-    params.require(:data).permit(:name)
+    params.permit(:name)
   end
 
   def create_params
-    params.require(:data).permit(:name).merge(user_id: @current_user.id)
+    params.permit(:name).merge(user_id: @current_user.id)
   end
 end

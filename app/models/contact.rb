@@ -28,7 +28,7 @@ class Contact < ApplicationRecord
   after_update :create_history, if: :saved_changes?
 
   def owner_user_id
-    contact_book.user_id
+    contact_book&.user_id
   end
 
   private

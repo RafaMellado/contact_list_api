@@ -2,11 +2,6 @@ class ContactsController < ApplicationController
   before_action :authorize_request
   before_action :set_contact, only: %i[show update destroy]
 
-  # GET /contacts
-  def index
-    render json: authorized_scope(Contact)
-  end
-
   # GET /contacts/1
   def show
     render json: @contact, include: ['contact_histories']
@@ -48,6 +43,6 @@ class ContactsController < ApplicationController
   end
 
   def contact_params
-    params.require(:data).permit(:givenname, :surname, :email, :phone, :contact_book_id)
+    params.permit(:givenname, :surname, :email, :phone, :contact_book_id)
   end
 end
