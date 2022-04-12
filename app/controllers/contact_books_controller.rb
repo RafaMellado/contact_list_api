@@ -4,7 +4,7 @@ class ContactBooksController < ApplicationController
 
   # GET /contact_books
   def index
-    render json: authorized_scope(ContactBook)
+    render json: authorized_scope(ContactBook).filtrate(filter_params)
   end
 
   # GET /contact_books/1
@@ -21,7 +21,7 @@ class ContactBooksController < ApplicationController
     if @contact_book.save
       render json: @contact_book, status: :created, location: @contact_book
     else
-      render json: @contact_book.errors, status: :unprocessable_entity
+      render json: @contact_book.errors.details, status: :unprocessable_entity
     end
   end
 
@@ -30,7 +30,7 @@ class ContactBooksController < ApplicationController
     if @contact_book.update(contact_book_params)
       render json: @contact_book
     else
-      render json: @contact_book.errors, status: :unprocessable_entity
+      render json: @contact_book.errors.details, status: :unprocessable_entity
     end
   end
 
@@ -53,5 +53,9 @@ class ContactBooksController < ApplicationController
 
   def create_params
     params.permit(:name).merge(user_id: @current_user.id)
+  end
+
+  def filter_params
+    params.fetch(:filter, {}).permit(:name)
   end
 end

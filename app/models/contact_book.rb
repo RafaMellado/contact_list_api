@@ -18,4 +18,8 @@ class ContactBook < ApplicationRecord
   has_many :contacts, dependent: :destroy
 
   belongs_to :user
+
+  filter_by :name, (lambda do |name|
+    where('name LIKE ?', "%#{name}%")
+  end)
 end

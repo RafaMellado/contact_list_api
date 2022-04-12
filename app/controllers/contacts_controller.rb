@@ -2,6 +2,11 @@ class ContactsController < ApplicationController
   before_action :authorize_request
   before_action :set_contact, only: %i[show update destroy]
 
+  # GET /contacts
+  def index
+    render json: authorized_scope(Contact).filtrate(filter_params)
+  end
+
   # GET /contacts/1
   def show
     render json: @contact, include: ['contact_histories']
@@ -16,7 +21,7 @@ class ContactsController < ApplicationController
     if @contact.save
       render json: @contact, status: :created, location: @contact
     else
-      render json: @contact.errors, status: :unprocessable_entity
+      render json: @contact.errors.details, status: :unprocessable_entity
     end
   end
 
@@ -25,7 +30,7 @@ class ContactsController < ApplicationController
     if @contact.update(contact_params)
       render json: @contact
     else
-      render json: @contact.errors, status: :unprocessable_entity
+      render json: @contact.errors.details, status: :unprocessable_entity
     end
   end
 
@@ -44,5 +49,9 @@ class ContactsController < ApplicationController
 
   def contact_params
     params.permit(:givenname, :surname, :email, :phone, :contact_book_id)
+  end
+
+  def filter_params
+    params.fetch(:filter, {}).permit(:fullname)
   end
 end

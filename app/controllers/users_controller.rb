@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     if @user.save
       render json: @user, status: :created
     else
-      render json: { errors: @user.errors.full_messages },
+      render json: { errors: @user.errors.details },
              status: :unprocessable_entity
     end
   end
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   def update
     return if @user.update(user_params)
 
-    render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+    render json: { errors: @user.errors.details }, status: :unprocessable_entity
   end
 
   private
