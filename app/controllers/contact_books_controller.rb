@@ -21,7 +21,7 @@ class ContactBooksController < ApplicationController
     if @contact_book.save
       render json: @contact_book, status: :created, location: @contact_book
     else
-      render json: @contact_book.errors.details, status: :unprocessable_entity
+      render json: { errors: @contact_book.errors.details }, status: :unprocessable_entity
     end
   end
 
@@ -30,7 +30,7 @@ class ContactBooksController < ApplicationController
     if @contact_book.update(contact_book_params)
       render json: @contact_book
     else
-      render json: @contact_book.errors.details, status: :unprocessable_entity
+      render json: { errors: @contact_book.errors.details }, status: :unprocessable_entity
     end
   end
 

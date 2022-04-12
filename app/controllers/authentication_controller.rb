@@ -9,7 +9,7 @@ class AuthenticationController < ApplicationController
       render json: { token: encode_json_web_token, exp: expiration_time,
                      username: @user.username }, status: :ok
     else
-      render json: { error: 'unauthorized' }, status: :unauthorized
+      render json: { error: 'unauthorized' }, status: 422
     end
   end
 
