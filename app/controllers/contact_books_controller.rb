@@ -9,7 +9,7 @@ class ContactBooksController < ApplicationController
 
   # GET /contact_books/1
   def show
-    render json: @contact_book, include: ['contacts']
+    render json: @contact_book
   end
 
   # POST /contact_books

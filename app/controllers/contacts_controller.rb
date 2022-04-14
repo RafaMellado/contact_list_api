@@ -52,6 +52,6 @@ class ContactsController < ApplicationController
   end
 
   def filter_params
-    params.fetch(:filter, {}).permit(:fullname)
+    params.fetch(:filter, {}).permit(:fullname, :contact_book_id)
   end
 end

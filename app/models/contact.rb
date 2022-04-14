@@ -27,6 +27,8 @@ class Contact < ApplicationRecord
 
   after_update :create_history, if: :saved_changes?
 
+  filter_by :contact_book_id
+
   filter_by :fullname, (lambda do |value|
     where("CONCAT(givenname, ' ', surname) LIKE ?", "%#{value}%")
   end)
