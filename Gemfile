@@ -6,7 +6,7 @@ ruby '2.7.5'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.2', '>= 7.0.2.3'
 
-gem 'pg'
+gem "sqlite3", "~> 1.4"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
@@ -48,6 +48,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'capybara'
   gem 'rspec-rails', '~> 5.1.1'
   gem 'database_cleaner'
   gem 'rails_authorize_matchers', github: 'pacop/rails_authorize_matchers'
