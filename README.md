@@ -55,6 +55,10 @@ bundle exec rails s
 - [pry](https://rubygems.org/gems/pry): This gem allows to us to stop the runtime invocation and check data (like byebug or debugger)
 - [factory_bot_rails](https://rubygems.org/gems/factory_bot_rails): Gem used to create factories
 
+### Only for dev
+
+- [bullet](https://rubygems.org/gems/bullet): Gem used to help to identify N+1 queries
+
 ### Only for tests
 
 - [rspec-rails](https://rubygems.org/gems/rspec-rails): Gem used to create unit tests

@@ -40,7 +40,7 @@ RSpec.describe '/contact_books', type: :request do
       get contact_book_url(contact_book), headers: valid_headers, as: :json
 
       expect(response).to be_successful
-      expect(json_hash.keys).to match_array model_keys << :contacts
+      expect(json_hash.keys).to match_array model_keys
     end
   end
 
@@ -51,7 +51,7 @@ RSpec.describe '/contact_books', type: :request do
       it 'creates a new ContactBook' do
         expect do
           post contact_books_url,
-               params: { data: valid_attributes }, headers: valid_headers, as: :json
+               params: valid_attributes, headers: valid_headers, as: :json
         end.to change(ContactBook, :count).by(1)
 
         expect(response).to have_http_status(:created)
@@ -63,13 +63,13 @@ RSpec.describe '/contact_books', type: :request do
       it 'does not create a new ContactBook' do
         expect do
           post contact_books_url,
-               params: { data: invalid_attributes }, as: :json
+               params: invalid_attributes, as: :json
         end.to change(ContactBook, :count).by(0)
       end
 
       it 'renders a JSON response with errors for the new contact_book' do
         post contact_books_url,
-             params: { data: invalid_attributes }, headers: valid_headers, as: :json
+             params: invalid_attributes, headers: valid_headers, as: :json
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -84,7 +84,7 @@ RSpec.describe '/contact_books', type: :request do
 
       it 'updates the requested contact_book' do
         put contact_book_url(contact_book),
-            params: { data: new_attributes }, headers: valid_headers, as: :json
+            params: new_attributes, headers: valid_headers, as: :json
 
         expect(response).to have_http_status(:ok)
         expect(json_hash.keys).to match_array model_keys
@@ -94,7 +94,7 @@ RSpec.describe '/contact_books', type: :request do
     context 'with invalid parameters' do
       it 'renders a JSON response with errors for the contact_book' do
         put contact_book_url(contact_book),
-            params: { data: invalid_attributes }, headers: valid_headers, as: :json
+            params: invalid_attributes, headers: valid_headers, as: :json
 
         expect(response).to have_http_status(:unprocessable_entity)
       end

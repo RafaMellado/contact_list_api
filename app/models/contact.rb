@@ -30,7 +30,7 @@ class Contact < ApplicationRecord
   filter_by :contact_book_id
 
   filter_by :fullname, (lambda do |value|
-    where("CONCAT(givenname, ' ', surname) ILIKE ?", "%#{value}%")
+    where("givenname || ' ' || surname LIKE ?", "%#{value}%")
   end)
 
   def owner_user_id

@@ -41,4 +41,23 @@ RSpec.describe ContactBook, type: :model do
       end
     end
   end
+
+  describe 'Filters' do
+    before do
+      FactoryBot.create_list(:contact_book, 3)
+    end
+
+    context 'filter_by name' do
+      let(:valid_contact_book) do
+        FactoryBot.create(:contact_book)
+      end
+
+      it 'return the correct response' do
+        response = ContactBook.filtrate(name: valid_contact_book.name)
+
+        expect(response.count).to eq(1)
+        expect(response.first).to eq(valid_contact_book)
+      end
+    end
+  end
 end

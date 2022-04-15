@@ -52,7 +52,7 @@ class ContactBooksController < ApplicationController
   end
 
   def create_params
-    params.permit(:name).merge(user_id: @current_user.id)
+    contact_book_params.merge(user_id: @current_user.id)
   end
 
   def filter_params

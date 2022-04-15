@@ -4,7 +4,11 @@ ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
+
 require 'rspec/rails'
+
+require 'database_cleaner'
+require 'rails_authorize/matchers'
 
 Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
 
@@ -72,5 +76,14 @@ RSpec.configure do |config|
       with.test_framework :rspec
       with.library :rails
     end
+  end
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before do
+    DatabaseCleaner.strategy = :transaction
+    Faker::UniqueGenerator.clear
   end
 end
