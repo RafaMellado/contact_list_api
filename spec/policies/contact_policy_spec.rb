@@ -23,7 +23,9 @@ RSpec.describe ContactPolicy, type: :policy do
 
   describe 'scope' do
     context 'when use scope' do
-      let!(:valid_contact) { FactoryBot.create(:contact, contact_book: FactoryBot.create(:contact_book, user: user)) }
+      let!(:valid_contact) do
+        FactoryBot.create(:contact, contact_book: FactoryBot.create(:contact_book, user: user))
+      end
 
       before do
         FactoryBot.create_list(:contact, 3)

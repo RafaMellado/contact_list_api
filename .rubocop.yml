@@ -1,0 +1,21 @@
+AllCops:
+  Exclude:
+    - "config/**/*"
+    - "bin/**/*"
+    - "db/schema.rb"
+    - "lib/tasks/*"
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 100
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  ExcludedMethods: ["describe", "context"]
+
+Metrics/MethodLength:
+  Max: 20

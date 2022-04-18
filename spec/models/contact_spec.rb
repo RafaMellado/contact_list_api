@@ -3,7 +3,9 @@ require 'spec_helper'
 
 RSpec.describe Contact, type: :model do
   let(:user) { FactoryBot.create(:user) }
-  let(:contact) { FactoryBot.create(:contact, contact_book: FactoryBot.create(:contact_book, user: user)) }
+  let(:contact) do
+    FactoryBot.create(:contact, contact_book: FactoryBot.create(:contact_book, user: user))
+  end
 
   describe 'Fields' do
     it { is_expected.to have_db_column(:givenname).of_type(:string) }
@@ -26,11 +28,13 @@ RSpec.describe Contact, type: :model do
 
     it { is_expected.to validate_length_of(:givenname).is_at_least(2).is_at_most(24) }
     it { is_expected.to validate_length_of(:surname).is_at_least(2).is_at_most(24) }
-    it { is_expected.to validate_length_of(:phone).is_at_most(12)}
-    it { is_expected.to validate_numericality_of(:phone)}
+    it { is_expected.to validate_length_of(:phone).is_at_most(12) }
+    it { is_expected.to validate_numericality_of(:phone) }
 
     it { is_expected.to validate_uniqueness_of(:email).scoped_to(:contact_book_id) }
-    it { is_expected.to validate_uniqueness_of(:phone).case_insensitive.scoped_to(:contact_book_id) }
+    it do
+      is_expected.to validate_uniqueness_of(:phone).case_insensitive.scoped_to(:contact_book_id)
+    end
 
     it { is_expected.to allow_value('email@addresse.foo').for(:email) }
     it { is_expected.not_to allow_value('email').for(:email) }
@@ -41,7 +45,9 @@ RSpec.describe Contact, type: :model do
       it 'create new and correct contact history' do
         old_surname = contact.surname
 
-        expect { contact.update(surname: 'new surname for test') }.to change(ContactHistory, :count).by(1)
+        expect do
+          contact.update(surname: 'new surname for test')
+        end.to change(ContactHistory, :count).by(1)
 
         expect(ContactHistory.last.surname).to eq(old_surname)
       end

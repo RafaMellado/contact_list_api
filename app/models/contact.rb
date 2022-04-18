@@ -18,8 +18,10 @@
 class Contact < ApplicationRecord
   validates :givenname, length: { minimum: 2, maximum: 24 }
   validates :surname, length: { minimum: 2, maximum: 24 }
-  validates :email, presence: true, uniqueness: { scope: :contact_book_id }, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :phone, presence: true, uniqueness: { scope: :contact_book_id }, numericality: true, length: { maximum: 12 }
+  validates :email, presence: true, uniqueness: { scope: :contact_book_id },
+                    format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :phone, presence: true, uniqueness: { scope: :contact_book_id }, numericality: true,
+                    length: { maximum: 12 }
 
   has_many :contact_histories, dependent: :destroy
 
